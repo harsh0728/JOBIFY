@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const customFetch = axios.create({
-  baseURL: '/api/v1',
+  baseURL: "https://mern-course-jobify-fqqf.onrender.com",
 });
 
 export default customFetch;
