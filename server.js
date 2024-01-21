@@ -9,6 +9,16 @@ import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
+import cors from "cors";
+app.use(cors({
+  origin: 'https://mern-course-jobify-fqqf.onrender.com',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
+
+
+
 
 // routers
 import jobRouter from "./routes/jobRouter.js";
@@ -33,20 +43,31 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
 app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(mongoSanitize());
 
+// Define base URL dynamically based on environment
+// const baseUrl =
+//   process.env.NODE_ENV === "production"
+//     ? "https://mern-course-jobify-fqqf.onrender.com"
+//     : "http://localhost:5100";
+
+// const baseUrl = "https://mern-course-jobify-fqqf.onrender.com";
+// console.log(baseUrl);
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
 app.get("/api/v1/test", (req, res) => {
-  res.json({ msg: "test route" });
+  res.json({ msg: "test route working" });
 });
 
+// Use routes with dynamic base URL
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
@@ -58,9 +79,6 @@ app.get("*", (req, res) => {
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });
 });
-
-
-
 
 app.use(errorHandlerMiddleware);
 

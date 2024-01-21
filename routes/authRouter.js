@@ -32,9 +32,6 @@ router.get("/logout", logout);
 
 router.post("/emailSend", emailSend);
 router.post("/changePassword", changePassword);
-// router.post('/send-email', (req, res) => {
-//   EmailController.sendEmail(req.body).then(resultFromContoller => res.send(resultFromContoller));
-// });
-//router.post("/send-email", sendEmail);
+
 
 export default router;

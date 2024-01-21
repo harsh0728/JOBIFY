@@ -95,7 +95,7 @@ export const changePassword = async (req, res) => {
       let user = await User.findOne({ email: req.body.email });
 
       // adding hashing
-     
+
       const hashedPassword = await hashPassword(req.body.password);
       req.body.password = hashedPassword;
       console.log(hashedPassword);
